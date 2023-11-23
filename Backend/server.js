@@ -1,9 +1,35 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const app = require("express") ();
+const cors = require("cors");
+require("dotenv").config();
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
-const app = express()
-mongoose.connect('mongodb://localhost:27017/Student_db')
+app.use(cors());
 
-app.listen(8080, ()=>{
-    console.log("server is runing")
+const port = process.env.PORT || 6000;
+
+mongoose.connect(process.env.DATABASE).then(() => {
+    console.log("Connected To Database");
+})
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.json());
+
+// app.use(function(req, res) {
+//     res.status(404).send({url: req.originalUrl + ' not found'}) 
+// });
+
+const studentRouter = require("./routes/students.js");
+//http://localhost:6000/routes/student
+app.use('/student', studentRouter);
+
+// app.use('/',)
+
+// app.get("/",(req, res)=>{
+//     res.send('API started')
+// })
+
+app.listen(port, () => {
+    console.log("Beautician API started on port " + port);
 })

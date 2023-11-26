@@ -31,5 +31,5 @@ app.use('/student', studentRouter);
 // })
 
 app.listen(port, () => {
-    console.log("Beautician API started on port " + port);
+    console.log("Studen Management System API Started On Port " + port);
 })
